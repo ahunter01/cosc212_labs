@@ -13,40 +13,42 @@
 
         <header>
             <h1>Classic Cinema</h1>
+
+            <div id="user">
+                <div id="login">
+                    <form id="loginForm">
+                        <label for="loginUser">Username: </label>
+                        <input type="text" name="loginUser" id="loginUser"><br>
+                        <label for="loginPassword">Password: </label>
+                        <input type="password" name="loginPassword" id="loginPassword"><br>
+                        <input type="submit" id="loginSubmit" value="Login">
+                    </form>
+                </div>
+    
+                <div id="logout">
+                    <p>Welcome, <span id="logoutUser"></span></p>
+                    <form id="logoutForm">
+                        <input type="submit" id="logoutSubmit" value="Logout">
+                    </form>
+                </div>
+            </div>
+    
+            <nav>
+                <ul>
+                    <li>Home</li>
+                    <li><a href="classic.html">Classics</a></li>
+                    <li><a href="scifi.html">Sci&nbsp;Fi</a></li>
+                    <li><a href="hitchcock.html">Hitchcock</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="cart.html">Cart</a></li>
+                </ul>
+            </nav>
+
         </header>
 
-		<div id="user">
-            <div id="login">
-                <form id="loginForm">
-                    <label for="loginUser">Username: </label>
-                    <input type="text" name="loginUser" id="loginUser">
-                    <label for="loginPassword">Password: </label>
-                    <input type="password" name="loginPassword" id="loginPassword">
-                    <input type="submit" id="loginSubmit" value="Login">
-                </form>
-            </div>
+    <main>
 
-            <div id="logout">
-                <p>Welcome, <span id="logoutUser"></span></p>
-                <form id="logoutForm">
-                    <input type="submit" id="logoutSubmit" value="Logout">
-                </form>
-            </div>
-		</div>
-
-        <nav>
-
-            <ul>
-                <li> Home
-                <li> <a href="classic.html">Classics</a>
-                <li> <a href="scifi.html">Science Fiction and Horror</a>
-                <li> <a href="hitchcock.html">Alfred Hitchcock</a>
-            </ul>
-
-
-
-        </nav>
-<div id="main">
+        <div id="main">
             <p>
                 Welcome to Classic Cinema, your online store for classic film.
             </p>
@@ -54,6 +56,8 @@
 
             </div>
         </div>
+
+    </main>
 
         <footer>
             <p>
