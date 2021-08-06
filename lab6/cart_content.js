@@ -15,7 +15,7 @@
                     element.innerHTML += "<li>" + cart.title + " = " + cart.price + "</li>";
                     total_cost += parseFloat(cart.price);
                 });
-                element.innerHTML += "<p>Total cost = " + total_cost + "</p>";
+                element.innerHTML += "<p>Total cost = $" + total_cost.toFixed(2) + "</p>";
             }
 
         pub.setup = function () {
