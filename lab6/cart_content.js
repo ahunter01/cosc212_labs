@@ -8,15 +8,19 @@
         var pub = {};
 
         function New_page (cart_list) {
+
             var title, price, total_cost;
             total_cost = 0;
-            var element = document.getElementById("cart_details");
-                cart_list.forEach(function (cart) {
-                    element.innerHTML += "<li>" + cart.title + " = " + cart.price + "</li>";
-                    total_cost += parseFloat(cart.price);
-                });
-                element.innerHTML += "<p>Total cost = $" + total_cost.toFixed(2) + "</p>";
-            }
+            var cartContent = document.getElementById("cart_details");
+            cartContent.innerHTML = "<table><tr><th>Movies</th><th>Price</th></tr>"
+            cart_list.forEach(function (cart) {
+                cartContent.innerHTML += "<tr><td>" + cart.title + "</td><td>" + cart.price + "</td></tr>";
+                total_cost += parseFloat(cart.price);
+            });
+
+            cartContent.innerHTML += "</table><p>Total cost = $" + total_cost.toFixed(2) + "</p>";
+            alert(cartContent.innerHTML);
+        }
 
         pub.setup = function () {
             var cart_list = Cookie.get("myCart");
