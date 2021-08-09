@@ -12,14 +12,17 @@
             var title, price, total_cost;
             total_cost = 0;
             var cartContent = document.getElementById("cart_details");
-            cartContent.innerHTML = "<table><tr><th>Movies</th><th>Price</th></tr>"
+            // var tableOpening = "<table><tr><th>Movies</th><th>Price</th></tr>"
+            // cartContent.innerHTML = tableOpening
             cart_list.forEach(function (cart) {
-                cartContent.innerHTML += "<tr><td>" + cart.title + "</td><td>" + cart.price + "</td></tr>";
+                // cartContent.innerHTML += "<tr><td>" + cart.title + "</td><td>" + cart.price + "</td></tr>";
+                cartContent.innerHTML += "<p>" + cart.title +  " - $" + cart.price + "</p>";
                 total_cost += parseFloat(cart.price);
             });
 
-            cartContent.innerHTML += "</table><p>Total cost = $" + total_cost.toFixed(2) + "</p>";
-            alert(cartContent.innerHTML);
+            // cartContent.innerHTML += "</table><p>Total cost = $" + total_cost.toFixed(2) + "</p>";
+            cartContent.innerHTML += "<h4>Total cost = $" + total_cost.toFixed(2) + "</h4>";
+            // alert(cartContent.innerHTML);
         }
 
         pub.setup = function () {
