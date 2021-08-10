@@ -30,6 +30,7 @@
             console.log(cart_list);
             if (cart_list === null) {
                 document.getElementById("cart_details").innerHTML = "<p>Cart is empty</p>";
+                document.getElementById("form").innerHTML = "";
             } else {
                 cart_list = JSON.parse(cart_list);
                 New_page(cart_list);
