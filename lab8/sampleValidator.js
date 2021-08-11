@@ -1,22 +1,7 @@
-/**
- * Validation functions for the Classic Cinema site.
- *
- * Created by: Steven Mills, 09/04/2014
- * Last Modified by: Steven Mills 23/07/2015
- */
-
-/*jslint browser: true, devel: true */
-/*global Cookie, window */
-
-/**
- * Module pattern for Validation functions
- */
 var SampleValidator = (function () {
     "use strict";
 
     var pub;
-
-    // Public interface
     pub = {};
 
     /**
@@ -92,7 +77,16 @@ var SampleValidator = (function () {
     function startsWith(textValue, startValue) {
         return textValue.substring(0, startValue.length) === startValue;
     }
+    
+    function checkEmail(textValue){
+        var pattern = /^[a-zA-Z0-9_\-]+(\.[a-zA-Z0-9_\-]+)*@[a-zA-Z0-9_\-]+(\.[a-zA-Z0-9_\-]+)*.[a-zA-Z0-9_\-]+(\.[a-zA-Z0-9_\-]+)*$/
+        return pattern.test(textValue);
+    }
 
+    function checkPost(textValue){
+        var pattern = /^[0-9]{4}$/;
+        return pattern.test(textValue);
+    }
 
     /**
      * Check that a credit card number looks valid
@@ -187,6 +181,35 @@ var SampleValidator = (function () {
             messages.push("Visa CVC values must be 3 digits long");
         }
     }
+    
+    function checkAddress(deliveryName, deliveryAddress1, deliveryCity, messages) {
+        if (!checkNotEmpty(deliveryName)) {
+            messages.push("You must enter a name");
+        }
+        if (!checkNotEmpty(deliveryAddress1)) {
+            messages.push("You must enter an address");
+        }
+        if (!checkNotEmpty(deliveryCity)) {
+            messages.push("You must enter a city");
+        }
+    }
+    
+    function checkdeliveryEmail(deliveryEmail, messages){
+        if (!checkNotEmpty(deliveryEmail)) {
+            messages.push("You must enter email address");
+        } else if (!checkEmail(deliveryEmail)) {
+            messages.push("Invalid email address");
+        }
+    }
+        
+
+    function checkdeliveryPostcode(deliveryPostcode, messages) {
+        if (!checkNotEmpty(deliveryPostcode)) {
+            messages.push("You must enter postcode digit");
+        } else if (!checkPost(deliveryPostcode)) {
+            messages.push("The postcode should only contain the digits 0-9 and 4 digit");
+        }
+    }
 
     /**
      * Validate the checkout form
@@ -196,42 +219,60 @@ var SampleValidator = (function () {
      * @return False, because server-side form handling is not implemented. Eventually will return true on success and false otherwise.
      */
     function validateCheckout() {
-        var messages, cardType, cardNumber, cardMonth, cardYear, cardValidation, errorHTML;
+        var messages, cardType, cardNumber, cardMonth, cardYear, cardValidation, errorHTML, deliveryPostcode,
+            deliveryName, deliveryAddress1, deliveryCity, deliveryEmail;
 
         // Default assumption is that everything is good, and no messages
         messages = [];
 
         // Validate Address Details
+        deliveryName = document.getElementById("deliveryName").value;
+        deliveryAddress1 =document.getElementById("deliveryAddress1").value;
+        deliveryCity = document.getElementById("deliveryCity").value;
+        checkAddress(deliveryName, deliveryAddress1, deliveryCity, messages);
+        
+        // Validate postcode
+       deliveryPostcode = document.getElementById("deliveryPostcode").value;
+       checkdeliveryPostcode(deliveryPostcode, messages);
+        
+       //validate email address
+       deliveryEmail = document.getElementById("deliveryEmail").value;
+       checkdeliveryEmail(deliveryEmail, messages);
 
-        // TO BE ADDED
+       // Validate Credit Card Details
 
-        // Validate Credit Card Details
+       // This depends a bit on the type of card, so get that first
+       cardType = document.getElementById("cardType").value;
 
-        // This depends a bit on the type of card, so get that first
-        cardType = document.getElementById("cardType").value;
+       // Credit card number validation
+       cardNumber = document.getElementById("cardNumber").value;
+       checkCreditCardNumber(cardType, cardNumber, messages);
 
-        // Credit card number validation
-        cardNumber = document.getElementById("cardNumber").value;
-        checkCreditCardNumber(cardType, cardNumber, messages);
+       // Expiry date validation
+       cardMonth = document.getElementById("cardMonth").value;
+       cardYear = document.getElementById("cardYear").value;
+       checkCreditCardDate(cardMonth, cardYear, messages);
 
-        // Expiry date validation
-        cardMonth = document.getElementById("cardMonth").value;
-        cardYear = document.getElementById("cardYear").value;
-        checkCreditCardDate(cardMonth, cardYear, messages);
+       // CVC validation
+       cardValidation = document.getElementById("cardValidation").value;
+       checkCreditCardValidation(cardType, cardValidation, messages);
 
-        // CVC validation
-        cardValidation = document.getElementById("cardValidation").value;
-        checkCreditCardValidation(cardType, cardValidation, messages);
+       console.log(messages.length);
 
         if (messages.length === 0) {
             // Checkout successful, clear the cart
-            
+            Cookie.clear("myCart");
             // Display a friendly message
-            
+            document.getElementsByTagName("main")[0].innerHTML = "<p>Thank you for your order</p>";
         } else {
             // Report the error messages
             console.log(JSON.stringify(messages));
-
+            for (let i = 0; i < messages.length; i++) {
+                document.getElementById("errorMessages").innerHTML += "<p>" + messages[i] + " !!</p>";
+            }
+            if (messages.length > 1) {
+                document.getElementById("errorMessages").innerHTML += "<h4>Sort your self out mate</h4>";
+            }
         }
 
         // Stop the form from submitting, which would trigger a page load
@@ -251,13 +292,12 @@ var SampleValidator = (function () {
         form.onsubmit = validateCheckout;
         document.getElementById("cardNumber").onkeypress = checkKeyIsDigit;
         document.getElementById("cardValidation").onkeypress = checkKeyIsDigit;
+        document.getElementById("deliveryPostcode").onkeypress = checkKeyIsDigit;
     };
 
-    // Expose public interface
     return pub;
 }());
 
-// The usual onload event handling to call SampleValidator.setup
 if (window.addEventListener) {
     window.addEventListener('load', SampleValidator.setup);
 } else if (window.attachEvent) {
