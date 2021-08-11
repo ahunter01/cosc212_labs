@@ -263,10 +263,11 @@ var SampleValidator = (function () {
             // Checkout successful, clear the cart
             Cookie.clear("myCart");
             // Display a friendly message
-            document.getElementsByTagName("main")[0].innerHTML = "<p>Thank you for your order</p>";
+            document.getElementsByTagName("main")[0].innerHTML = "<p>Thank you for your order!!</p>";
         } else {
             // Report the error messages
             console.log(JSON.stringify(messages));
+            document.getElementById("errorMessages").innerHTML = "";
             for (let i = 0; i < messages.length; i++) {
                 document.getElementById("errorMessages").innerHTML += "<p>" + messages[i] + " !!</p>";
             }
