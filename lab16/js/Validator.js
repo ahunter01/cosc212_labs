@@ -284,13 +284,14 @@ var Validator = (function () {
      * Note that if the validation fails (returns false) then the form is not submitted.
      */
     pub.setup = function () {
-        // var form = document.getElementById("checkoutForm");
-        // form.onsubmit = validateCheckout;
-        $(checkoutForm).submit(validateCheckout);
-        // document.getElementById("cardNumber").onkeypress = checkKeyIsDigit;
-        // document.getElementById("cardValidation").onkeypress = checkKeyIsDigit;
-        $("#cardNumber").keypress(checkKeyIsDigit);
-        $("#cardValidation").keypress(checkKeyIsDigit);
+        // // var form = document.getElementById("checkoutForm");
+        // // form.onsubmit = validateCheckout;
+        // $(checkoutForm).submit(validateCheckout);
+        // // document.getElementById("cardNumber").onkeypress = checkKeyIsDigit;
+        // // document.getElementById("cardValidation").onkeypress = checkKeyIsDigit;
+        // $("#cardNumber").keypress(checkKeyIsDigit);
+        // $("#cardValidation").keypress(checkKeyIsDigit);
+        
     };
 
     // Expose public interface
