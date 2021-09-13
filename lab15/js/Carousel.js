@@ -45,9 +45,9 @@
 	}
 
 	pub.setup = function() {
-		categoryList.push(new MovieCategory("Classic Films", "images/Metropolis.jpg ", "classic.html"));
-		categoryList.push(new MovieCategory("Science Fiction and Horror", "images/Plan_9_from_Outer_Space.jpg", "scifi.html"));
-		categoryList.push(new MovieCategory("Alfred Hitchcock", "images/Vertigo.jpg", "hitchcock.html"));
+		categoryList.push(new MovieCategory("Classic Films", "images/Metropolis.jpg ", "classic.php"));
+		categoryList.push(new MovieCategory("Science Fiction and Horror", "images/Plan_9_from_Outer_Space.jpg", "scifi.php"));
+		categoryList.push(new MovieCategory("Alfred Hitchcock", "images/Vertigo.jpg", "hitchcock.php"));
 		nextCategory();
       	setInterval(nextCategory, 3000);
     };
