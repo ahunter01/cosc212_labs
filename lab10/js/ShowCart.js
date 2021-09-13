@@ -9,10 +9,10 @@ var ShowCart = (function(){
         var i, total, outStr;
         total = 0;
         var cart = window.sessionStorage.getItem("CC_Cart");
-        var target = document.getElementById("cart");
+        // var target = document.getElementById("cart");
         outStr = "<h2>Cart Contents</h2>";
         if (cart === null){
-            target.innerHTML = "<p>Your cart is empty.</p>";
+            $("#cart").append("<p>Your cart is empty.</p>");
         }else{
             cart = JSON.parse(cart);
             outStr += "<table id='cartContents'><tr><th>Title</th><th>Price</th></tr>"
@@ -21,7 +21,8 @@ var ShowCart = (function(){
                 total += parseFloat(cart[i].price);
             }
             outStr += "</table>" + "<p>Total Price: $" + total.toFixed(2) + "</p>";
-            target.innerHTML = outStr;
+            // target.innerHTML = outStr;
+            $("#cart").replaceWith(outStr);
         }
 
     };

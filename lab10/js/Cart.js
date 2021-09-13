@@ -5,8 +5,10 @@ var Cart = (function(){
 
     function addToCart(){
         /*jshint -W040*/
-        var title = this.parentNode.parentNode.getElementsByTagName("h3")[0].innerText;
-        var price = this.parentNode.getElementsByTagName("span")[0].innerText;
+        // var title = this.parentNode.parentNode.getElementsByTagName("h3")[0].innerText;
+        var title = $(this).parent().siblings('h3').text();
+        // var price = this.parentNode.getElementsByTagName("span")[0].innerText;
+        var price = $(this).siblings('.price').text();
         /*jshint +W040*/
         var cart = window.sessionStorage.getItem("CC_Cart");
         var item = {};
@@ -25,13 +27,15 @@ var Cart = (function(){
     }
 
     pub.setup = function(){
-        var i;
-        var btns = document.getElementsByClassName("buy");
+        // var i;
+        // var btns = document.getElementsByClassName("buy");
 
-        for (i = 0; i < btns.length; i++) {
-            btns[i].onclick = addToCart;
-            btns[i].style.cursor = "pointer";
-        }
+        // for (i = 0; i < btns.length; i++) {
+        //     btns[i].onclick = addToCart;
+        //     btns[i].style.cursor = "pointer";
+        // }
+        $(".buy").click(addToCart);
+        $(".buy").css("cursor", "pointer");
     };
 
     return pub;

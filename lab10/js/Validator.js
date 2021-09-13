@@ -26,7 +26,7 @@ var Validator = (function () {
      * @param textValue The string to check.
      * @return True if textValue is not just whitespace, false otherwise.
      */
-    function checkNotEmpty(textValue) {
+     function checkNotEmpty(textValue) {
         return textValue.trim().length > 0;
     }
 
@@ -221,44 +221,54 @@ var Validator = (function () {
         messages = [];
         errorHTML = "";
         // Validate Address Details
-        checkAddress(document.getElementById("deliveryAddress1").value, messages);
-        checkName(document.getElementById("deliveryName").value, messages);
-        checkEmail(document.getElementById("deliveryEmail").value, messages);
+        // checkAddress(document.getElementById("deliveryAddress1").value, messages);
+        // checkName(document.getElementById("deliveryName").value, messages);
+        // checkEmail(document.getElementById("deliveryEmail").value, messages);
 
-
-
+        checkAddress($(deliveryAddress1).val(), messages);
+        checkName($(deliveryName).val(), messages);
+        checkEmail($(deliveryEmail).val(), messages);
 
         // TO BE ADDED
 
         // Validate Credit Card Details
 
         // This depends a bit on the type of card, so get that first
-        cardType = document.getElementById("cardType").value;
+        // cardType = document.getElementById("cardType").value;
+        cardType = $("#cardType").val();
 
         // Credit card number validation
-        cardNumber = document.getElementById("cardNumber").value;
+        // cardNumber = document.getElementById("cardNumber").value;
+        
+        cardNumber = $("#cardNumber").val();
         checkCreditCardNumber(cardType, cardNumber, messages);
 
         // Expiry date validation
-        cardMonth = document.getElementById("cardMonth").value;
-        cardYear = document.getElementById("cardYear").value;
+        // cardMonth = document.getElementById("cardMonth").value;
+        // cardYear = document.getElementById("cardYear").value;
+
+        cardMonth = $("#cardMonth").val();
+        cardYear = $("#cardYear").val();
         checkCreditCardDate(cardMonth, cardYear, messages);
 
         // CVC validation
-        cardValidation = document.getElementById("cardValidation").value;
+        // cardValidation = document.getElementById("cardValidation").value;
+        cardValidation = $("#cardValidation").val();
         checkCreditCardValidation(cardType, cardValidation, messages);
 
         if (messages.length === 0) {
             // Checkout successful, clear the cart
             window.sessionStorage.clear("CC_Cart");
-            document.getElementById("errorMsgs").innerHTML = "<p>Your order has been submitted</p>";
+            // document.getElementById("errorMsgs").innerHTML = "<p>Your order has been submitted</p>";
+            $("#errorMsgs").append("<p>Your order has been submitted</p>");
         } else {
             errorHTML = "<ul>";
             for (i = 0; i < messages.length; i++) {
                 errorHTML += "<li>" + messages[i] + "</li>";
             }
             errorHTML += "</ul>";
-            document.getElementById("errorMsgs").innerHTML = errorHTML;
+            // document.getElementById("errorMsgs").innerHTML = errorHTML;
+            $("#errorMsgs").append(errorHTML);
         }
 
         // Stop the form from submitting, which would trigger a page load
@@ -274,10 +284,13 @@ var Validator = (function () {
      * Note that if the validation fails (returns false) then the form is not submitted.
      */
     pub.setup = function () {
-        var form = document.getElementById("checkoutForm");
-        form.onsubmit = validateCheckout;
-        document.getElementById("cardNumber").onkeypress = checkKeyIsDigit;
-        document.getElementById("cardValidation").onkeypress = checkKeyIsDigit;
+        // var form = document.getElementById("checkoutForm");
+        // form.onsubmit = validateCheckout;
+        $(checkoutForm).submit(validateCheckout);
+        // document.getElementById("cardNumber").onkeypress = checkKeyIsDigit;
+        // document.getElementById("cardValidation").onkeypress = checkKeyIsDigit;
+        $("#cardNumber").keypress(checkKeyIsDigit);
+        $("#cardValidation").keypress(checkKeyIsDigit);
     };
 
     // Expose public interface
